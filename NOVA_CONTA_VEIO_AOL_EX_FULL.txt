@@ -1,0 +1,104 @@
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXX NOVA_CONTA_GITHUB_VEIO_AOL_EX_FULL XXXXXXXXXXXXXXXXXXXXXXXXXX
+
+------------------------------------ NEW_KEY -------------------------------------------------------------------------------------------------------------------
+
+		- ssh-keygen_-t_ed25519_-C_"[email-conta]"
+		- MSG: __Generating pub/priv ed25519 key pair
+		             __Enter: Path e new name: id_marcos-dev-pre-sal-key
+		             __Enter PassPhrase: Enter + Enter
+		             __SHA256:/5aaUpkJC2...		
+
+----------------------------------- LISTA_KEYS -----------------------------------------------------------------------------------------------------------------
+
+		- ls_-al_~/.ssh
+		- Path: id_marcos-dev-pre-sal-key
+		- Key: id_marcos-dev-pre-sal-key.pub
+
+---------------------------------- COPIAR_KEY_PARA_GITHUB --------------------------------------------------------------------------------------------
+
+		- clip_<_~/.ssh/id_marcos-dev-pre-sal-key.pub
+		- **No GitHub: Settings + SSH and GPG Keys + New SSH Key
+
+----------------------------------- HABILITAR_SSH_AGENT -------------------------------------------------------------------------------------------------
+
+		- eval_"$(ssh-agent_-s)"
+		- MSG: agent pid [number]
+
+----------------------------------- ADD_KEY_NO SSH_AGENT ---------------------------------------------------------------------------------------------
+
+		- ssh-add_~/.ssh/id_[nameKey]**
+		- **Path-sem extensão
+		-MSG: Identity added: /c/Users/Marcos/.ssh/id_marcos-dev-pre-sal-key (veio_tiao@aol.com)
+
+----------------------------------- VER_LISTA_DE KEYS -----------------------------------------------------------------------------------------------------
+
+		- ssh-add_-l
+		-MSG: SHA256:/5aaUpkJC2... veio_tiao@aol.com (ED25519)
+		-**Código da nova key adicionada e email da nova conta no GitHub.
+
+--------------------------------- Auto-launching ssh-agent on Git for Windows --------------------------------------------------------------------
+
+	***Abrir .bashrc no GIT: nano ~/.bashrc
+	***Endereço da chave atual: ssh-add ~/.ssh/id_3nd-da-porra
+
+
+		You can run ssh-agent automatically when you open bash or Git shell. Copy the following lines and paste them into your ~/.profile or ~/.bashrc file in Git shell:
+
+		env=~/.ssh/agent.env
+
+		agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+
+		agent_start () {
+    		(umask 077; ssh-agent >| "$env")
+    		. "$env" >| /dev/null ; }
+
+		agent_load_env
+
+		# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
+		agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+
+		if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    		agent_start
+    		ssh-add_[endereço da ssh-key sem extensão]***
+		elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    		ssh-add_[endereço da ssh-key sem extensão]***
+		fi
+
+		unset env
+
+	If your private key is not stored in one of the default locations (like ~/.ssh/id_rsa), you'll need to tell your SSH authentication agent where to find it. To add your key to ssh-agent, type ssh-add ~/path/to/my_key. For more information, see Generating a new SSH key and adding it to the ssh-agent.
+
+
+***NA: 	- Usando o código acima no '.bashrc' (abrir .bashrc com o comando 'nano_~/.bashrc'); 
+	- Sem esquecer, adicionar o 'Path' da 'ssh-key' (ssh-add_[path ssh-key]**sem extensão); 
+	- Salvar e Fechar com o comando 'CTRL + X' + 'Y'(save) + ENTER(Exit);
+	- Fechar o Git Bash e reabri-lo;
+	- MSG na 1º linha: Identity added: c/user/Marcos/.ssh/id_[nameKey](email da conta github);
+	- Criar novo 'doc.txt';
+	- Add e Commit;
+	- Inserir apenas 'git_push';
+	- MSG: ...To github.com: email-conta/nome-repo.git
+		edb2720..d550056 main --> main
+	- Confirmado 'push' direto.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+marcos-dev-pre-sal/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
