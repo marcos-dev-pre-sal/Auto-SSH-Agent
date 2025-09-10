@@ -1,3 +1,12 @@
 XXXXXXXXXXXXXXXXXXXXXXXXXX PASSO_A_PASSO_SSH_AUTO XXXXXXXXXXXXXXXXXXXXXXXX
 
 ----------------------- Organizando o passo-a-passo -----------------------------------------------------
+
+	> Configurano nova conta;
+	> Local Base: /Desktop/GIT;
+	> Nova Conta: 
+			- Email: veio_tio@aol.com
+			- Senha: ex-full
+			- avatar: marcos-dev-pre-sal
+
+	> Novo Repositório: marcos-dev-pre-sal/Auto-SSH-Agent
