@@ -1,6 +1,6 @@
-XXXXXXXXXXXXXXXXXXXXXXXXXX PASSO_A_PASSO_SSH_AUTO XXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXX PASSO_A_PASSO_SSH_AUTO XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
------------------------ Organizando o passo-a-passo -----------------------------------------------------
+--------------------------------------- Organizando o passo-a-passo ---------------------------------------------------------
 
 	> Configurano nova conta;
 	> Local Base: /Desktop/GIT;
@@ -10,3 +10,124 @@ XXXXXXXXXXXXXXXXXXXXXXXXXX PASSO_A_PASSO_SSH_AUTO XXXXXXXXXXXXXXXXXXXXXXXX
 			- avatar: marcos-dev-pre-sal
 
 	> Novo Repositório: marcos-dev-pre-sal/Auto-SSH-Agent
+	> Path: /c/Users/Marcos/Desktop/GIT/Auto-SSH-Agent
+	 
+
+	>Iniciando a config. do Git Bash:
+
+		- git_config_--global_user.name_"name"/user.email_"email"*
+		- *: underscore = space
+
+	>Criar SSH Key:
+
+		- ssh-keygen_-t_ed25519_-C_"email-conta-GitHub"
+		- MSG: Generating public/private ed25519 key pair
+		- Enter: Path/new name: id_[nome-personalizado]
+		- Enter PassPhrase: Enter - Enter
+		- Algorithm: SHA256:/5aaUpkJC2...
+
+	>Ver lista de Keys:
+
+		- ls_-al_~/.ssh*
+		- *: underscore = space
+
+	>Copiar e inserir 'SSH-Key-Code' no GitHub:
+
+		- Copiar 'code': clip_<_~/.ssh/id_[nome-personalizado]*
+		- *: underscore = space(exceto em 'id_[nome-person.])
+		- No GitHub:
+				- settings
+				- SSG and GPG Keys
+				- New SSH Key
+
+	>Teste de conexão:
+
+		- ssh_-vT_git@github.com
+		- Em caso de sucesso:
+
+			- openSSH_8.8p1 OpenSSL 1.1.1l 24 Aug 2021
+			- Reading Config. data /c/Users/Marcos/.ssh/config
+			- Reading Config. data /etc/ssh/ssh-config
+			- Connecting to github.com [4.228.31.150] port 22
+			- Connecting established...
+			- Hi marcos-dev-pre-sal You're successfully auth...
+
+	>Habilitar o SSH-Agent pelo terminal local:
+
+		- eval_"$(ssh-agent_-s)"*
+		- *: underscore = space
+		-MSG: Agent Pid [nº aleatório]
+
+	>Adicionar chave SSH no SSH-Agent:
+
+		- ssh-add_~/id_[nome-personalizado]*/**
+		- *: underscore = space(exceto em 'id_[nome-person.])
+		-**: 'id_[nome-person.]' é o 'path' da SSH-Key, então 'sem extensão .pub'.
+
+	>Ver chave adicionada:
+
+		- ssh-add_-l*
+		- *: underscore = space
+		-MSG: 256 SHA256:/5aaUpkJC2... veio_tiao@aol.com (ED25519)
+
+	>Configurar SSH-Agent Automático:
+
+		- Abrir '.bashrc' no Git Bash com:	nano_~/.bashrc*
+						*: underscore = space
+
+	>Com a janela do '.bashrc' aberta, inserir o código:
+
+		env=~/.ssh/agent.env
+
+		agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+
+		agent_start () {
+    		(umask 077; ssh-agent >| "$env")
+    		. "$env" >| /dev/null ; }
+
+		agent_load_env
+
+		# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2=agent not running
+		agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+
+		if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    		agent_start
+    		ssh-add_[endereço da ssh-key sem extensão]***
+		elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    		ssh-add_[endereço da ssh-key sem extensão]***
+		fi
+
+		unset env
+
+		***NA: No código acima, 'underscore' e 'space' estão posicionados conforme original.
+
+	>Usando o código acima no '.bashrc' (abrir .bashrc com o comando 'nano_~/.bashrc'); 
+	>Sem esquecer, adicionar o 'Path' da 'ssh-key' (ssh-add_[path ssh-key]**sem extensão); 
+	>Salvar e Fechar com o comando 'CTRL + X' + 'Y'(save) + ENTER(Exit);
+	>Fechar o Git Bash e reabri-lo;
+	>MSG: Identity added: /c/Users/Marcos/.ssh/id_marcos-dev-pre-sal-key (veio_tiao@aol.com)
+	>Criar novo 'doc.txt';
+	>Add e Commit;
+	>Inserir apenas 'git_push';
+	>MSG: ...To github.com: email-conta/nome-repo.git
+		edb2720..d550056 main --> main
+	>Confirmado 'push' direto.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
